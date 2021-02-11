@@ -1,0 +1,2188 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/25/2018 2:32:35 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="CHGVA-VW21B-098"
+  DTS:CreatorName="HQ\pcand"
+  DTS:DTSID="{F803B7A0-BC98-4F17-BFD7-1A80947C6117}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.123"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Process TAB Cube"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="165"
+  DTS:VersionGUID="{F381DF2A-84FE-4971-8B4E-7E863937AE09}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:LogProviders>
+    <DTS:LogProvider
+      DTS:ConfigString="DWH"
+      DTS:CreationName="Microsoft.LogProviderSQLServer"
+      DTS:Description="Writes log entries for events to a SQL Server database"
+      DTS:DTSID="{04C41714-624E-457D-8B83-A12621B292EB}"
+      DTS:ObjectName="SSIS log provider for SQL Server">
+      <DTS:ObjectData>
+        <InnerObject />
+      </DTS:ObjectData>
+    </DTS:LogProvider>
+  </DTS:LogProviders>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E0B16D78-BB95-4BB5-BA61-BA154CCD0329}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="replace(@[User::PartitionsClearBuild],&#xA;&quot;}, marker&quot;,&#xA;&quot;}]}}&quot;)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ClearCommand">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "refresh": {     "type": "clearValues",     "objects": [</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2BEBF692-8B7E-49D2-B02F-345CC674A4F5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DB">
+      <DTS:VariableValue
+        DTS:DataType="8">Asset</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{312F4265-F94E-403C-884B-9A0CC15793EF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;Select Distinct Right(Table_Name, len(Table_Name) -1)&#xA;From $System.DBSCHEMA_TABLES&#xA;WHERE TABLE_CATALOG = '&quot; + @[$Project::SSASdb] + &quot;' and table_type = 'table'&#xA;And Right(Table_Name, len(Table_Name) -1) &lt;&gt; '&quot; + @[$Project::FactTable] + &quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimensionsListSQL">
+      <DTS:VariableValue
+        DTS:DataType="8">Select Distinct Right(Table_Name, len(Table_Name) -1)
+From $System.DBSCHEMA_TABLES
+WHERE TABLE_CATALOG = 'Delinquencies' and table_type = 'table'
+And Right(Table_Name, len(Table_Name) -1) &lt;&gt; 'Lease'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{14898B6D-A731-4B26-B38A-28C23A6EA53D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dq">
+      <DTS:VariableValue
+        DTS:DataType="8">"</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{70348C7E-3990-4E34-B64E-F35EA42D9F0B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="IsProject">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F698CA27-C9C3-4EFD-81EC-FC6B1CD95806}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="OnePartition">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EAF50F11-EDCD-4AD1-AFA4-B80AE2F3EA38}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="OneTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{07425E27-02C7-460A-811F-9C7E4828FD2D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="OtherTables">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "refresh": {     "type": "Full",     "objects": [</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C5802E95-13EB-4252-BECD-957093C2702A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[System::PackageName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Package">
+      <DTS:VariableValue
+        DTS:DataType="8">Process TAB Cube</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E2EC97DC-D8B5-4585-859D-83734C7CF5EA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="replace(@[User::PartitionsProcessBuild],&#xA;&quot;}, marker&quot;,&#xA;&quot;}]}}&quot;)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PartitionCommand">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "refresh": {     "type": "Full",     "objects": [</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{95D4C339-497D-4FBF-875C-E2BAC677226C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PartitionsClearBuild">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "refresh": {     "type": "clearValues",     "objects": [</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{79AB887A-ED17-465B-88CF-CBB2E9369D47}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PartitionsCount">
+      <DTS:VariableValue
+        DTS:DataType="2">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E403B952-0732-4435-9082-484E3D5BC999}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PartitionsList">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D91FC1BB-6EA7-48CD-A7D9-294BB27D8CFA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PartitionsProcessBuild">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "refresh": {     "type": "Full",     "objects": [</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6045C825-1EA5-4217-BD25-79621094E62E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="replace(@[User::OtherTables],&#xA;&quot;}, marker&quot;,&#xA;&quot;}]}}&quot;)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ProcessingCommand">
+      <DTS:VariableValue
+        DTS:DataType="8">{   "refresh": {     "type": "Full",     "objects": [</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{848F9C7C-5BA5-47E3-A6E3-DB940D3D51FE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Result">
+      <DTS:VariableValue
+        DTS:DataType="2">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8FAA5C32-C241-4951-BB3D-1FED86ADFE4B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Schema">
+      <DTS:VariableValue
+        DTS:DataType="8">lc</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AF0B3FA7-B249-47BA-86A6-9A57595E9B11}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TableList">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:LoggingOptions
+    DTS:FilterKind="0"
+    DTS:LoggingMode="1">
+    <DTS:Property
+      DTS:DataType="8"
+      DTS:Name="EventFilter">3,7,OnError,13,OnQueryCancel,12,OnTaskFailed</DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnError"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPostExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPreExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnQueryCancel"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnTaskFailed"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:SelectedLogProviders>
+      <DTS:SelectedLogProvider
+        DTS:InstanceID="{04C41714-624E-457D-8B83-A12621B292EB}" />
+    </DTS:SelectedLogProviders>
+  </DTS:LoggingOptions>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Dead end cause no process needed"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E2E0D356-1E99-4261-BFDE-390554A5EC56}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Dead end cause no process needed"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B73982A3-014B-469F-81BF-2E24C15BDBEF}"
+          SQLTask:SqlStatementSource="Select 0" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\End Package on Success"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A3DF0908-269D-492B-B1B9-EB03C883F7D6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="End Package on Success"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+          SQLTask:SqlStatementSource="DECLARE @Time datetime = getdate()&#xA;DECLARE @Object varchar(85) =  'Process Cube ' + ?&#xA;Declare @Count int = ?&#xA;EXECUTE [dbo].up_ObjectStatus&#xA;   @Status = 'Ready'&#xA;  ,@Type = 'SSAS'&#xA;  ,@Name = @Object &#xA;, @DB = @Object &#xA;  ,@Schema = ''&#xA;  ,@Completed =  @Time&#xA;  ,@Rows = @Count " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::SSASdb"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::PartitionsCount"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process Partitions"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{82DBAD86-14C6-48CE-9514-DF89A9E0A4C9}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process Partitions">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Capture partition count (Legacy)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Statistic for Object activity"
+          DTS:DTSID="{1CE4A5B0-28A3-4787-B850-EFDA0074A5B1}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Capture partition count (Legacy)"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B73982A3-014B-469F-81BF-2E24C15BDBEF}"
+              SQLTask:SqlStatementSource="SELECT Count(*) As Result FROM lkpPartitions L WHERE NeedUpdateFlag = 1 AND L.Retention = ? AND L.SSASdb = ?"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="Result"
+                SQLTask:DtsVariableName="User::PartitionsCount" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::Retention"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Capture partition count (Project)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Statistic for Object activity"
+          DTS:DTSID="{ef22dba7-fbc9-4b82-ac3a-a9434d5b9eb0}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Capture partition count (Project)"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+              SQLTask:SqlStatementSource="SELECT Count(*) As Result FROM dbo.lkpPartitions L WHERE NeedUpdate = 1 AND L.Retention = ? AND L.SSASdb = ?"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="Result"
+                SQLTask:DtsVariableName="User::PartitionsCount" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::Retention"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\list partition in need of update (Legacy)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{259E5E5E-E02A-4DD4-8CCC-CD3AB734FFB6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="list partition in need of update (Legacy)"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B73982A3-014B-469F-81BF-2E24C15BDBEF}"
+              SQLTask:SqlStatementSource="SELECT ? + cast(L.Partition as varchar(10)) FROM lkpPartitions L &#xA;WHERE NeedUpdateFlag = 1 &#xA;AND L.Retention = ? AND L.SSASdb = ?  "
+              SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::PartitionsList" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::PartitionNamePrefix"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::Retention"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\list partition in need of update (Project)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{19f993ad-e53c-4465-8a2c-aac793812240}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="list partition in need of update (Project)"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+              SQLTask:SqlStatementSource="SELECT ? + + cast(L.Partition as varchar(10)) FROM dbo.lkpPartitions L &#xA;WHERE NeedUpdate = 1 &#xA;AND L.Retention = ? &#xA;AND L.SSASdb = ?  "
+              SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::PartitionsList" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::PartitionNamePrefix"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::Retention"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Loop through partitions to build clear and process command"
+          DTS:CreationName="STOCK:FOREACHLOOP"
+          DTS:Description="Foreach Loop Container"
+          DTS:DTSID="{39FFCCB2-414D-47E8-9EC1-87CB29728320}"
+          DTS:ExecutableType="STOCK:FOREACHLOOP"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Loop through partitions to build clear and process command">
+          <DTS:ForEachEnumerator
+            DTS:CreationName="Microsoft.ForEachADOEnumerator"
+            DTS:DTSID="{BF2B508F-B56C-499C-876F-2CB52A6093BF}"
+            DTS:ObjectName="{BF2B508F-B56C-499C-876F-2CB52A6093BF}">
+            <DTS:ObjectData>
+              <FEEADO
+                EnumType="EnumerateRowsInFirstTable"
+                VarName="User::PartitionsList" />
+            </DTS:ObjectData>
+          </DTS:ForEachEnumerator>
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Process Partitions\Loop through partitions to build clear and process command\Build Clear Command"
+              DTS:CreationName="Microsoft.ExpressionTask"
+              DTS:Description="Expression Task"
+              DTS:DTSID="{15258B5F-B1FE-44F9-AFAA-1565E0F3151F}"
+              DTS:ExecutableType="Microsoft.ExpressionTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Build Clear Command"
+              DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="5">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <ExpressionTask
+                  Expression="@[User::PartitionsClearBuild] =  @[User::PartitionsClearBuild]+ &quot;{&quot;+ @[User::dq] + &quot;database&quot;+ @[User::dq]+&quot;: &quot;+ @[User::dq]+ @[$Project::SSASdb]  + @[User::dq]+&quot;, &quot;+ @[User::dq]+&quot;table&quot;+ @[User::dq]+&quot;:&quot; + @[User::dq] + @[$Project::FactTable]   + @[User::dq]&#xA;+&quot;, &quot;+ @[User::dq]+&quot;partition&quot;+ @[User::dq]+&quot;:&quot; + @[User::dq] + @[User::OnePartition]  + @[User::dq]+&quot;}, &quot;" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Process Partitions\Loop through partitions to build clear and process command\Build process Partition"
+              DTS:CreationName="Microsoft.ExpressionTask"
+              DTS:Description="Expression Task"
+              DTS:DTSID="{78096395-B1F1-40C5-9D62-26489F1FE8C4}"
+              DTS:ExecutableType="Microsoft.ExpressionTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Build process Partition"
+              DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="6">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <ExpressionTask
+                  Expression="@[User::PartitionsProcessBuild] =  @[User::PartitionsProcessBuild]+ &quot;{&quot;+ @[User::dq] + &quot;database&quot;+ @[User::dq]+&quot;: &quot;+ @[User::dq]+ @[$Project::SSASdb]  + @[User::dq]+&quot;, &quot;+ @[User::dq]+&quot;table&quot;+ @[User::dq]+&quot;:&quot; + @[User::dq] + @[$Project::FactTable]   + @[User::dq]&#xA;+&quot;, &quot;+ @[User::dq]+&quot;partition&quot;+ @[User::dq]+&quot;:&quot; + @[User::dq] + @[User::OnePartition]  + @[User::dq]+&quot;}, &quot;" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:ForEachVariableMappings>
+            <DTS:ForEachVariableMapping
+              DTS:CreationName=""
+              DTS:DTSID="{6476607A-D8BF-49BD-A8BF-C3652EBD8A09}"
+              DTS:ObjectName="{6476607A-D8BF-49BD-A8BF-C3652EBD8A09}"
+              DTS:ValueIndex="0"
+              DTS:VariableName="User::OnePartition" />
+          </DTS:ForEachVariableMappings>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Process Clear"
+          DTS:CreationName="Microsoft.ASExecuteDDLTask"
+          DTS:Description="Analysis Services Execute DDL Task"
+          DTS:DTSID="{5E1F1751-0F9E-4B3A-BA08-2396D197658F}"
+          DTS:ExecutableType="Microsoft.ASExecuteDDLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Process Clear"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <ASDdlData
+              ConnectionName="SSAS"
+              SourceType="Variable"
+              Source="User::ClearCommand" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Process Partitions"
+          DTS:CreationName="Microsoft.ASExecuteDDLTask"
+          DTS:Description="Analysis Services Execute DDL Task"
+          DTS:DTSID="{CB783607-89E2-45E4-8EB6-9548AC362135}"
+          DTS:ExecutableType="Microsoft.ASExecuteDDLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Process Partitions"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <ASDdlData
+              ConnectionName="SSAS"
+              SourceType="Variable"
+              Source="User::PartitionCommand" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\String marking to enable replace"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{50ECEA9E-AA0A-4BC9-94D8-547200FF3696}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="String marking to enable replace">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Process Partitions\String marking to enable replace\Append marker to end of Clear"
+              DTS:CreationName="Microsoft.ExpressionTask"
+              DTS:Description="Expression Task"
+              DTS:DTSID="{9427C20F-D7DF-4E69-82AB-6E7B417C0631}"
+              DTS:ExecutableType="Microsoft.ExpressionTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Append marker to end of Clear"
+              DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="5">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <ExpressionTask
+                  Expression="@[User::PartitionsClearBuild] = @[User::PartitionsClearBuild] + &quot;marker&quot;" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\Process Partitions\String marking to enable replace\Append marker to end of partition"
+              DTS:CreationName="Microsoft.ExpressionTask"
+              DTS:Description="Expression Task"
+              DTS:DTSID="{7BBF6F30-A8C8-4634-BAE8-1B188C2BB6CB}"
+              DTS:ExecutableType="Microsoft.ExpressionTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Append marker to end of partition"
+              DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="6">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <ExpressionTask
+                  Expression="@[User::PartitionsProcessBuild] = @[User::PartitionsProcessBuild] + &quot;marker&quot;" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Test if ProjectOrLegacy 1"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{34411b0f-a4aa-4fe5-8cb8-7bd51cf0a400}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Test if ProjectOrLegacy 1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B73982A3-014B-469F-81BF-2E24C15BDBEF}"
+              SQLTask:SqlStatementSource="select case when ? = 'Project' Then 1 else 0 end as result"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="Result"
+                SQLTask:DtsVariableName="User::IsProject" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::ProjectOrLegacy"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Update partitionlist needupdate (Legacy)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{91BAAD2B-E11B-4B1A-A50A-8FC00256B816}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update partitionlist needupdate (Legacy)"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B73982A3-014B-469F-81BF-2E24C15BDBEF}"
+              SQLTask:SqlStatementSource="UPDATE L&#xA;SET L.NeedUpdate = 0&#xA;FROM lkpPartitions L&#xA;WHERE L.NeedUpdate = 1&#xA;AND L.Retention = ?&#xA;AND L.SSASdb = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::Retention"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Process Partitions\Update partitionlist needupdate (Project)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8bb1ff3e-7459-4e81-9e70-98f843a509ef}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update partitionlist needupdate (Project)"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="6">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+              SQLTask:SqlStatementSource="UPDATE L&#xA;SET L.NeedUpdate = 0&#xA;FROM dbo.lkpPartitions L&#xA;WHERE L.NeedUpdate = 1&#xA;AND L.Retention = ?&#xA;AND L.SSASdb = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::Retention"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{465DE86C-F7B0-4C40-9CCB-66D45D4C40CD}"
+          DTS:From="Package\Process Partitions\list partition in need of update (Legacy)"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Process Partitions\Capture partition count (Legacy)" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{B38A0C0B-1561-4202-A496-0F48BE1806A7}"
+          DTS:EvalOp="3"
+          DTS:Expression="@[User::IsProject] == 0"
+          DTS:From="Package\Process Partitions\Test if ProjectOrLegacy 1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Process Partitions\list partition in need of update (Legacy)" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 10]"
+          DTS:CreationName=""
+          DTS:DTSID="{4BA99625-1BA4-470C-A39D-84C8B8E90AAC}"
+          DTS:From="Package\Process Partitions\Loop through partitions to build clear and process command"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 10"
+          DTS:To="Package\Process Partitions\String marking to enable replace" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 11]"
+          DTS:CreationName=""
+          DTS:DTSID="{914909C7-1B95-45D5-A9B0-05ABCFE08FD5}"
+          DTS:From="Package\Process Partitions\String marking to enable replace"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 11"
+          DTS:To="Package\Process Partitions\Process Clear" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 12]"
+          DTS:CreationName=""
+          DTS:DTSID="{598CF28D-AE10-42F3-B156-24964751EC96}"
+          DTS:From="Package\Process Partitions\Process Clear"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 12"
+          DTS:To="Package\Process Partitions\Process Partitions" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 13]"
+          DTS:CreationName=""
+          DTS:DTSID="{19FBAEB3-5129-4715-9AC6-970765C235F1}"
+          DTS:EvalOp="3"
+          DTS:Expression="@[User::IsProject] == 0"
+          DTS:From="Package\Process Partitions\Process Partitions"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 13"
+          DTS:To="Package\Process Partitions\Update partitionlist needupdate (Legacy)" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{92A7E5D8-DD45-4B4E-8F5A-70BA2B3CCD39}"
+          DTS:EvalOp="3"
+          DTS:Expression="@[User::IsProject] == 1"
+          DTS:From="Package\Process Partitions\Test if ProjectOrLegacy 1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Process Partitions\list partition in need of update (Project)" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{9E5D4E48-6419-46AD-A480-D32C4220EFCC}"
+          DTS:From="Package\Process Partitions\list partition in need of update (Project)"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Process Partitions\Loop through partitions to build clear and process command" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{F637D8A7-8C89-463B-A80E-FCBE36B8CA6C}"
+          DTS:EvalOp="3"
+          DTS:Expression="@[User::IsProject] == 1"
+          DTS:From="Package\Process Partitions\Process Partitions"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Process Partitions\Update partitionlist needupdate (Project)" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 9]"
+          DTS:CreationName=""
+          DTS:DTSID="{CE9FDADA-9FCA-47B1-9191-C2923C01CCB1}"
+          DTS:From="Package\Process Partitions\list partition in need of update (Legacy)"
+          DTS:ObjectName="Constraint 9"
+          DTS:To="Package\Process Partitions\Loop through partitions to build clear and process command" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Process Partitions.PrecedenceConstraints[Constraint 91]"
+          DTS:CreationName=""
+          DTS:DTSID="{C6F99B94-7F41-400E-B817-8AB9E2AA0589}"
+          DTS:From="Package\Process Partitions\list partition in need of update (Project)"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 9"
+          DTS:To="Package\Process Partitions\Capture partition count (Project)" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Processing Dimensions"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{A41716F7-3BA9-492C-8872-CA3459FA9D11}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Processing Dimensions">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Processing Dimensions\append special marker to end of string"
+          DTS:CreationName="Microsoft.ExpressionTask"
+          DTS:Description="Expression Task"
+          DTS:DTSID="{0CF9D61A-3134-4151-B7F7-8BF75C4CC647}"
+          DTS:ExecutableType="Microsoft.ExpressionTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="append special marker to end of string"
+          DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <ExpressionTask
+              Expression="@[User::OtherTables]= @[User::OtherTables] + &quot;marker&quot;" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processing Dimensions\Build process dimensions command"
+          DTS:CreationName="STOCK:FOREACHLOOP"
+          DTS:Description="Foreach Loop Container"
+          DTS:DTSID="{30FA37ED-C1F0-400E-81AC-4CF4927A8967}"
+          DTS:ExecutableType="STOCK:FOREACHLOOP"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Build process dimensions command">
+          <DTS:ForEachEnumerator
+            DTS:CreationName="Microsoft.ForEachADOEnumerator"
+            DTS:DTSID="{9EC3BFE6-475A-4D8A-A355-43CDC71BEEA9}"
+            DTS:ObjectName="{1BA2338D-8BA3-42D9-8172-B6C2EA70864C}">
+            <DTS:ObjectData>
+              <FEEADO
+                EnumType="EnumerateRowsInFirstTable"
+                VarName="User::TableList" />
+            </DTS:ObjectData>
+          </DTS:ForEachEnumerator>
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Processing Dimensions\Build process dimensions command\Build Process Command"
+              DTS:CreationName="Microsoft.ExpressionTask"
+              DTS:Description="Expression Task"
+              DTS:DTSID="{CBBF9C2D-8CB1-42A2-B135-CC84E3A80E6C}"
+              DTS:ExecutableType="Microsoft.ExpressionTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Build Process Command"
+              DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="3">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <ExpressionTask
+                  Expression="@[User::OtherTables] =  @[User::OtherTables]+ &quot;{&quot;+ @[User::dq] + &quot;database&quot;+ @[User::dq]+&quot;: &quot;+ @[User::dq]+ @[$Project::SSASdb]  + @[User::dq]+&quot;, &quot;+ @[User::dq]+&quot;table&quot;+ @[User::dq]+&quot;:&quot; + @[User::dq] + @[User::OneTable]  + @[User::dq]+&quot;}, &quot;" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:ForEachVariableMappings>
+            <DTS:ForEachVariableMapping
+              DTS:CreationName=""
+              DTS:DTSID="{4A1E46A7-6D2A-4C14-B62C-0546C98066BC}"
+              DTS:ObjectName="{4A1E46A7-6D2A-4C14-B62C-0546C98066BC}"
+              DTS:ValueIndex="0"
+              DTS:VariableName="User::OneTable" />
+          </DTS:ForEachVariableMappings>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processing Dimensions\Process Other Tables"
+          DTS:CreationName="Microsoft.ASExecuteDDLTask"
+          DTS:Description="Analysis Services Execute DDL Task"
+          DTS:DTSID="{4160C6D2-0D77-4EFF-89B0-DB6D596579CA}"
+          DTS:ExecutableType="Microsoft.ASExecuteDDLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Process Other Tables"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <ASDdlData
+              ConnectionName="SSAS"
+              SourceType="Variable"
+              Source="User::ProcessingCommand" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Processing Dimensions\Run MDX query Table list"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{17A533CD-3ACA-49C9-9856-47B99275CC89}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Run MDX query Table list"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2B01AC1C-A10F-4DF9-9061-F81968A4E001}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::DimensionsListSQL"
+              SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::TableList" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processing Dimensions.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{13F474FF-5878-4FE6-AF29-03B409A91045}"
+          DTS:From="Package\Processing Dimensions\Run MDX query Table list"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Processing Dimensions\Build process dimensions command" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processing Dimensions.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{D9C57793-457E-43E7-8ACA-C62552FBCB4E}"
+          DTS:From="Package\Processing Dimensions\Build process dimensions command"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Processing Dimensions\append special marker to end of string" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Processing Dimensions.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{E2BC73D9-2260-4D45-9837-05BB2B177BCE}"
+          DTS:From="Package\Processing Dimensions\append special marker to end of string"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Processing Dimensions\Process Other Tables" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Start Package"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A3AAA7A9-C64F-4308-9A50-128096809A13}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Start Package"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+          SQLTask:SqlStatementSource="DECLARE @Time datetime = getdate()&#xA;DECLARE @Object varchar(85) =  'Process Cube ' + ?&#xA;EXECUTE [dbo].up_ObjectStatus&#xA;   @Status = 'Running'&#xA;  ,@Type = 'SSAS'&#xA;  ,@Name =@Object &#xA;, @DB =@Object &#xA;  ,@Schema = ''&#xA;  ,@Started =   @Time&#xA;  ,@ExecResults = 'Running'&#xA;  ,@Completed = '1/1/2050 00:00:00'&#xA;  ,@Rows = 0" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::SSASdb"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Test if process is possible"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{82D14475-008D-451A-B5F4-FE9C46145AD6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Test if process is possible"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+          SQLTask:SqlStatementSource="if Exists (Select&#xA;  L.Partition FROM lkpPartitions L &#xA;WHERE NeedUpdate = 1 And L.Retention = ? AND L.SSASdb = ?&#xA;)&#xA;SELECT 1 AS Result&#xA;Else  BEGIN&#xA;SELECT 0 AS Result&#xA;End"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="Result"
+            SQLTask:DtsVariableName="User::Result" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::Retention"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Project::SSASdb"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Test if process is possible (Project)"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6f6b7f70-3c8c-48cc-8089-ac8ddbbf4d11}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Test if process is possible (Project)"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0" />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+          SQLTask:SqlStatementSource="if Exists (Select&#xA;  L.Partition FROM dbo.lkpPartitions L &#xA;WHERE NeedUpdate = 1 And L.Retention = ? AND L.SSASdb = ?&#xA;)&#xA;SELECT 1 AS Result&#xA;Else  BEGIN&#xA;SELECT 0 AS Result&#xA;End"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="Result"
+            SQLTask:DtsVariableName="User::Result" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::Retention"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Project::SSASdb"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Test if ProjectOrLegacy"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2E520B63-EA44-4BA8-B3EB-819FE3F244AB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Test if ProjectOrLegacy"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B73982A3-014B-469F-81BF-2E24C15BDBEF}"
+          SQLTask:SqlStatementSource="select case when ? =  'Project' Then 1 else 0 end as result"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="Result"
+            SQLTask:DtsVariableName="User::IsProject" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::ProjectOrLegacy"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6B4A35B0-AD17-444E-B600-5E9785484B9A}"
+      DTS:From="Package\Start Package"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Processing Dimensions" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{B409C972-A78E-46BF-A99F-475B6CDD8DBF}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::Result] ==1"
+      DTS:From="Package\Test if process is possible"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Start Package" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{9840E2B2-83B5-433E-833A-4F30A81825CA}"
+      DTS:From="Package\Processing Dimensions"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Process Partitions" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{57092B75-5004-497E-B4A3-EB950ABCA3CE}"
+      DTS:From="Package\Process Partitions"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\End Package on Success" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{BB5BAECB-ADD9-40EB-9180-2F20B34232BB}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::Result] == 0"
+      DTS:From="Package\Test if process is possible"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Dead end cause no process needed" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{F86AF6EA-ED29-4F62-80A8-66652E735A3E}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::IsProject] == 0"
+      DTS:From="Package\Test if ProjectOrLegacy"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Test if process is possible" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{0499D208-03C5-4414-8D43-FCD058A096C2}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::IsProject] == 1"
+      DTS:From="Package\Test if ProjectOrLegacy"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Test if process is possible (Project)" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{4F530492-85AD-4F89-A839-F90DBCEAB2BB}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::Result] == 0"
+      DTS:From="Package\Test if process is possible (Project)"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Dead end cause no process needed" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{060310AF-79CF-44FC-819D-A55777977DF2}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::Result] ==1"
+      DTS:From="Package\Test if process is possible (Project)"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Start Package" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{951035F1-0277-4409-A92C-405CB25D645A}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{AD2324A1-8F57-4514-AFAF-3E4304EB0661}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\End on Error"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{71A290B6-4028-400E-AFE9-C3DB74618786}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="End on Error"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E780415B-81ED-4FEF-9904-E651424560CB}"
+              SQLTask:SqlStatementSource="&#xA;DECLARE @Time datetime = getdate()&#xA;DECLARE @Object varchar(85) =  'Process Cube ' + ?&#xA;DECLARE @ErrorMessage varchar(4000) = @@ServerName + '; ' + ?&#xA;DECLARE @Package varchar(250) = ?&#xA;DECLARE @SMTP varchar(35) = ?&#xA;&#xA;EXECUTE [dbo].[up_ObjectStatus] &#xA;   @Status = 'Failed'&#xA;  ,@Type = 'SSIS'&#xA;,  @DB = @Object &#xA;  ,@Name = @Object &#xA;  ,@Schema = ''&#xA;  ,@Completed = @Time&#xA;  ,@Rows = 0&#xA;  ,@ExecResults = @ErrorMessage&#xA;&#xA;  &#xA;If @@Servername = (  SELECT c.SSIS_Production_Server_Name FROM dbo.Constants c)&#xA;BEGIN&#xA;  DECLARE @Subjectv varchar (250)&#xA;  , @Bodyv varchar (4000)&#xA;  , @Recipient varchar (250);&#xA;SET @Subjectv = @Package + ' Fail. ' + @@servername;&#xA;SET @Bodyv = @Package + ' Failed :' + @ErrorMessage;&#xA;SET @Recipient = 'pcand@crlease.com';&#xA;&#xA;EXEC msdb.dbo.sp_send_dbmail @profile_name =@SMTP&#xA;  , @recipients = @Recipient&#xA;  --  ,  @copy_recipients =  'copy_recipient  ; ...n ' &#xA;  --  ,  @blind_copy_recipients =  'blind_copy_recipient  ; ...n ' &#xA;  , @subject = @Subjectv&#xA;  , @body = @Bodyv&#xA;  , @body_format = 'HTML'&#xA;  , @importance = 'High';&#xA; END&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::SSASdb"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="3"
+                SQLTask:DtsVariableName="$Project::SMTPProfile"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <NodeLayout
+          Size="248,42"
+          Id="Package\Dead end cause no process needed"
+          TopLeft="604,295.5" />
+        <NodeLayout
+          Size="196,42"
+          Id="Package\End Package on Success"
+          TopLeft="877,1896.5" />
+        <NodeLayout
+          Size="234,42"
+          Id="Package\Process Partitions\Capture partition count (Legacy)"
+          TopLeft="5.5,281.5" />
+        <NodeLayout
+          Size="234,42"
+          Id="Package\Process Partitions\Capture partition count (Project)"
+          TopLeft="533.5,167.5" />
+        <NodeLayout
+          Size="267,42"
+          Id="Package\Process Partitions\list partition in need of update (Legacy)"
+          TopLeft="43,82.5" />
+        <NodeLayout
+          Size="267,42"
+          Id="Package\Process Partitions\list partition in need of update (Project)"
+          TopLeft="389.5,69.5" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Process Partitions\Loop through partitions to build clear and process command\Build Clear Command"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Process Partitions\Loop through partitions to build clear and process command\Build process Partition"
+          TopLeft="248,5.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="438,103"
+          Size="438,146"
+          Id="Package\Process Partitions\Loop through partitions to build clear and process command"
+          TopLeft="262.5,258.5" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Process Partitions\Process Clear"
+          TopLeft="398.5,662.5" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Process Partitions\Process Partitions"
+          TopLeft="390.5,738.5" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\Process Partitions\String marking to enable replace\Append marker to end of Clear"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="242,42"
+          Id="Package\Process Partitions\String marking to enable replace\Append marker to end of partition"
+          TopLeft="292.5,5.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="540,103"
+          Size="540,146"
+          Id="Package\Process Partitions\String marking to enable replace"
+          TopLeft="205.5,453.5" />
+        <NodeLayout
+          Size="210,48"
+          Id="Package\Process Partitions\Test if ProjectOrLegacy 1"
+          TopLeft="248.5,5.5" />
+        <NodeLayout
+          Size="229,42"
+          Id="Package\Process Partitions\Update partitionlist needupdate (Legacy)"
+          TopLeft="141,856.5" />
+        <NodeLayout
+          Size="273,42"
+          Id="Package\Process Partitions\Update partitionlist needupdate (Project)"
+          TopLeft="461.5,856.5" />
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint]"
+          TopLeft="133.333333333333,124.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10.8333333333333,157"
+              Start="0,0"
+              End="-10.8333333333333,149.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.3611317944899" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,59.3611317944899"
+                    Point2="0,63.3611317944899"
+                    Point3="-4,63.3611317944899" />
+                  <mssgle:LineSegment
+                    End="-6.83333333333331,63.3611317944899" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6.83333333333331,63.3611317944899"
+                    Point2="-10.8333333333333,63.3611317944899"
+                    Point3="-10.8333333333333,67.36113179449" />
+                  <mssgle:LineSegment
+                    End="-10.8333333333333,149.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 1]"
+          TopLeft="353.5,53.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-177,29"
+              Start="0,0"
+              End="-177,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.5"
+                    Point2="0,14.5"
+                    Point3="-4,14.5" />
+                  <mssgle:LineSegment
+                    End="-173,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-173,14.5"
+                    Point2="-177,14.5"
+                    Point3="-177,18.5" />
+                  <mssgle:LineSegment
+                    End="-177,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-96.5000000000001,19.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 10]"
+          TopLeft="478.5,404.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49"
+              Start="0,0"
+              End="0,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 11]"
+          TopLeft="473,599.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63"
+              Start="0,0"
+              End="0,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 12]"
+          TopLeft="471.5,704.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 13]"
+          TopLeft="446.5,780.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-191,76"
+              Start="0,0"
+              End="-191,68.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.8405797101449" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.8405797101449"
+                    Point2="0,30.8405797101449"
+                    Point3="-4,30.8405797101449" />
+                  <mssgle:LineSegment
+                    End="-187,30.8405797101449" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-187,30.8405797101449"
+                    Point2="-191,30.8405797101449"
+                    Point3="-191,34.8405797101449" />
+                  <mssgle:LineSegment
+                    End="-191,68.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-103.5,35.8405797101449,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 2]"
+          TopLeft="458.5,29.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.5,40"
+              Start="0,0"
+              End="64.5,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="60.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="60.5,0"
+                    Point2="64.5,0"
+                    Point3="64.5,4" />
+                  <mssgle:LineSegment
+                    End="64.5,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="56.5,-22,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 3]"
+          TopLeft="479.833333333333,111.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73.3333333333332,147"
+              Start="0,0"
+              End="73.3333333333332,139.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,69.7123846699787" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,69.7123846699787"
+                    Point2="0,73.7123846699787"
+                    Point3="4,73.7123846699787" />
+                  <mssgle:LineSegment
+                    End="69.3333333333332,73.7123846699787" />
+                  <mssgle:CubicBezierSegment
+                    Point1="69.3333333333332,73.7123846699787"
+                    Point2="73.3333333333332,73.7123846699787"
+                    Point3="73.3333333333332,77.7123846699787" />
+                  <mssgle:LineSegment
+                    End="73.3333333333332,139.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 4]"
+          TopLeft="498.5,780.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="99.5000000000001,76"
+              Start="0,0"
+              End="99.5000000000001,68.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.8405797101449" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.8405797101449"
+                    Point2="0,30.8405797101449"
+                    Point3="4,30.8405797101449" />
+                  <mssgle:LineSegment
+                    End="95.5000000000001,30.8405797101449" />
+                  <mssgle:CubicBezierSegment
+                    Point1="95.5000000000001,30.8405797101449"
+                    Point2="99.5000000000001,30.8405797101449"
+                    Point3="99.5000000000001,34.8405797101449" />
+                  <mssgle:LineSegment
+                    End="99.5000000000001,68.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="41.7500000000001,35.8405797101449,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 9]"
+          TopLeft="219.666666666667,124.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="261.833333333333,134"
+              Start="0,0"
+              End="261.833333333333,126.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.0789277736411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50.0789277736411"
+                    Point2="0,54.0789277736411"
+                    Point3="4,54.0789277736411" />
+                  <mssgle:LineSegment
+                    End="257.833333333333,54.0789277736411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="257.833333333333,54.0789277736411"
+                    Point2="261.833333333333,54.0789277736411"
+                    Point3="261.833333333333,58.0789277736411" />
+                  <mssgle:LineSegment
+                    End="261.833333333333,126.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Process Partitions.PrecedenceConstraints[Constraint 91]"
+          TopLeft="523,111.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="127.5,56"
+              Start="0,0"
+              End="127.5,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="123.5,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="123.5,28"
+                    Point2="127.5,28"
+                    Point3="127.5,32" />
+                  <mssgle:LineSegment
+                    End="127.5,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="768,955"
+          Size="768,998"
+          Id="Package\Process Partitions"
+          TopLeft="5.50000000000011,970.5" />
+        <NodeLayout
+          Size="263,42"
+          Id="Package\Processing Dimensions\append special marker to end of string"
+          TopLeft="5.50000000000003,313.5" />
+        <NodeLayout
+          Size="194,42"
+          Id="Package\Processing Dimensions\Build process dimensions command\Build Process Command"
+          TopLeft="5.5,5.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,103"
+          Size="205,146"
+          Id="Package\Processing Dimensions\Build process dimensions command"
+          TopLeft="34.5,107.5" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Processing Dimensions\Process Other Tables"
+          TopLeft="47.0000000000001,415.5" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\Processing Dimensions\Run MDX query Table list"
+          TopLeft="37,5.5" />
+        <EdgeLayout
+          Id="Package\Processing Dimensions.PrecedenceConstraints[Constraint]"
+          TopLeft="137,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processing Dimensions.PrecedenceConstraints[Constraint 1]"
+          TopLeft="137,253.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Processing Dimensions.PrecedenceConstraints[Constraint 2]"
+          TopLeft="137,355.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="274,513"
+          Size="274,556"
+          Id="Package\Processing Dimensions"
+          TopLeft="244,343.5" />
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Start Package"
+          TopLeft="308,241.5" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\Test if process is possible"
+          TopLeft="549.5,130.5" />
+        <NodeLayout
+          Size="245,42"
+          Id="Package\Test if process is possible (Project)"
+          TopLeft="955.5,148.5" />
+        <NodeLayout
+          Size="210,48"
+          Id="Package\Test if ProjectOrLegacy"
+          TopLeft="884,5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="381,283.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="617.833333333333,172.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-259.833333333333,69"
+              Start="0,0"
+              End="-259.833333333333,61.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.3736684420772" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.3736684420772"
+                    Point2="0,34.3736684420772"
+                    Point3="-4,34.3736684420772" />
+                  <mssgle:LineSegment
+                    End="-255.833333333333,34.3736684420772" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-255.833333333333,34.3736684420772"
+                    Point2="-259.833333333333,34.3736684420772"
+                    Point3="-259.833333333333,38.3736684420772" />
+                  <mssgle:LineSegment
+                    End="-259.833333333333,61.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-137.916666666667,39.3736684420772,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="381,899.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.50000000000011,71"
+              Start="0,0"
+              End="8.50000000000011,63.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.5"
+                    Point2="0,35.5"
+                    Point3="4,35.5" />
+                  <mssgle:LineSegment
+                    End="4.50000000000011,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.50000000000011,35.5"
+                    Point2="8.50000000000011,35.5"
+                    Point3="8.50000000000011,39.5" />
+                  <mssgle:LineSegment
+                    End="8.50000000000011,63.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="773.5,1469.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="103.5,448"
+              Start="0,0"
+              End="95.9999999999999,448">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47.7499999999999,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47.7499999999999,0"
+                    Point2="51.7499999999999,0"
+                    Point3="51.7499999999999,4" />
+                  <mssgle:LineSegment
+                    End="51.7499999999999,444" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51.7499999999999,444"
+                    Point2="51.7499999999999,448"
+                    Point3="55.7499999999999,448" />
+                  <mssgle:LineSegment
+                    End="95.9999999999999,448" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="685.083333333333,172.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,123"
+              Start="0,0"
+              End="0,115.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,115.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,49.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="955.333333333333,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-305.333333333333,77.5"
+              Start="0,0"
+              End="-305.333333333333,70">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.351606805293" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.351606805293"
+                    Point2="0,31.351606805293"
+                    Point3="-4,31.351606805293" />
+                  <mssgle:LineSegment
+                    End="-301.333333333333,31.351606805293" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-301.333333333333,31.351606805293"
+                    Point2="-305.333333333333,31.351606805293"
+                    Point3="-305.333333333333,35.351606805293" />
+                  <mssgle:LineSegment
+                    End="-305.333333333333,70" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-160.666666666667,36.351606805293,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="1022.66666666667,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="55.3333333333334,95.5"
+              Start="0,0"
+              End="55.3333333333334,88">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.6332703213611" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.6332703213611"
+                    Point2="0,38.6332703213611"
+                    Point3="4,38.6332703213611" />
+                  <mssgle:LineSegment
+                    End="51.3333333333334,38.6332703213611" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51.3333333333334,38.6332703213611"
+                    Point2="55.3333333333334,38.6332703213611"
+                    Point3="55.3333333333334,42.6332703213611" />
+                  <mssgle:LineSegment
+                    End="55.3333333333334,88" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="19.6666666666667,43.6332703213611,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="1117.5,190.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-349.5,105"
+              Start="0,0"
+              End="-349.5,97.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.5051015450394" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.5051015450394"
+                    Point2="0,52.5051015450394"
+                    Point3="-4,52.5051015450394" />
+                  <mssgle:LineSegment
+                    End="-345.5,52.5051015450394" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-345.5,52.5051015450394"
+                    Point2="-349.5,52.5051015450394"
+                    Point3="-349.5,56.5051015450394" />
+                  <mssgle:LineSegment
+                    End="-349.5,97.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-182.75,57.5051015450394,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="1038.5,190.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-634.5,51"
+              Start="0,0"
+              End="-634.5,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.3618680236376" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.3618680236376"
+                    Point2="0,25.3618680236376"
+                    Point3="-4,25.3618680236376" />
+                  <mssgle:LineSegment
+                    End="-630.5,25.3618680236376" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-630.5,25.3618680236376"
+                    Point2="-634.5,25.3618680236376"
+                    Point3="-634.5,29.3618680236376" />
+                  <mssgle:LineSegment
+                    End="-634.5,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-325.25,30.3618680236376,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="text box for comments"
+          ParentId="Package"
+          Size="139,37"
+          Id="ec8b60d7-41a5-463d-91d4-6f578636f412"
+          TopLeft="902,333">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo>
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package.EventHandlers[OnError]\End on Error"
+          TopLeft="NaN,NaN" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

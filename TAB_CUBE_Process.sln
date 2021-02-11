@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "TAB_CUBE_Process", "TAB_CUBE_Process.dtproj", "{7E53D63F-2324-442F-BE7C-99E8AB1C00F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E53D63F-2324-442F-BE7C-99E8AB1C00F5}.Development|Default.ActiveCfg = Development
+		{7E53D63F-2324-442F-BE7C-99E8AB1C00F5}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D00AA31-6B7F-492F-85F3-AF155734E155}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/crossroadsbi
+		SccProjectUniqueName0 = TAB_CUBE_Process.dtproj
+		SccLocalPath0 = .
+		SccLocalPath1 = .
+	EndGlobalSection
+EndGlobal
